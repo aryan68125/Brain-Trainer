@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gridLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_row="2"
+    android:layout_column="2"
+    android:background="#FCFCFC"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="110dp"
+        android:background="@android:color/holo_orange_light"
+        android:onClick="start"
+        android:text="START!"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ScoreCounter"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#7381D8"
+        android:text="0/0"
+        android:textColor="#050505"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sumTextView"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:textColor="#050505"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/choice0"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/holo_green_light"
+        android:onClick="chooseAnswer"
+        android:tag="0"
+        android:text="choice1"
+        android:textColor="#050505"
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sumTextView" />
+
+    <TextView
+        android:id="@+id/choice1"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/holo_orange_dark"
+        android:onClick="chooseAnswer"
+        android:tag="1"
+        android:text="choice2"
+        android:textColor="#050505"
+        android:textSize="50dp"
+        app:layout_constraintStart_toEndOf="@+id/choice0"
+        app:layout_constraintTop_toBottomOf="@+id/sumTextView" />
+
+    <TextView
+        android:id="@+id/choice2"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:background="@android:color/holo_red_dark"
+        android:onClick="chooseAnswer"
+        android:tag="2"
+        android:text="choice3"
+        android:textColor="#050505"
+        android:textSize="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choice0" />
+
+    <TextView
+        android:id="@+id/choice3"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@android:color/holo_purple"
+        android:onClick="chooseAnswer"
+        android:tag="3"
+        android:text="choice4"
+        android:textColor="#020202"
+        android:textSize="50dp"
+        app:layout_constraintStart_toEndOf="@+id/choice2"
+        app:layout_constraintTop_toBottomOf="@+id/choice1" />
+
+    <TextView
+        android:id="@+id/TimerTextView"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#EC8FB1"
+        android:text="15S"
+        android:textColor="#040404"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="145dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="22dp"
+        android:textColor="#020202"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/rightImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:srcCompat="@drawable/happy_i" />
+
+    <ImageView
+        android:id="@+id/wrongImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/rightImage"
+        app:srcCompat="@drawable/sad" />
+
+    <TextView
+        android:id="@+id/DevinfoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="DEVELOPER INFO"
+        android:textColor="#040404"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
