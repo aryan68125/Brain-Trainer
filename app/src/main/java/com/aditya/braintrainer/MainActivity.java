@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //storing high score int he file system you need to go to android manifest xml file
-    //there inside the android tag write (android:requestLegacyExternalStorage="true")
+    //there inside the application tag write (android:requestLegacyExternalStorage="true")
     //permission denied problem will be solved
     public void scorestore() //it will store the high score
     {
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         HighScore = score;
         totalQuestions = TotalQuesionsAsked;
 
-        save = "Correct Answers = "+HighScore + "\t\t Total numbers of questions attempted = "+totalQuestions;
+        save = "Correct Answers = "+HighScore + "\n Numbers of questions attempted = "+totalQuestions;
         if(ScoreCounter.getText().toString().equals("score"))
         {
             Toast.makeText(MainActivity.this, "File not saved score is 0/0", Toast.LENGTH_SHORT).show();
@@ -456,5 +456,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        }
     }
-}
