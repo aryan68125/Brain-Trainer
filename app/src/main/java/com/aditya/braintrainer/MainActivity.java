@@ -1,22 +1,42 @@
 package com.aditya.braintrainer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    int HighScore;
+    int totalQuestions;
+    String save;
+    //creating a variable to store data while writing
+    private static final int WRITE_EXTERNAL_STORAGE_CODE = 1;
 
     MediaPlayer mediaPlayer; //mediaplayer will play the time sound when the count down timer becomes 0
 
@@ -136,6 +156,97 @@ public class MainActivity extends AppCompatActivity {
         Count_Down_timer();
     }
 
+    //storing high score int he file system you need to go to android manifest xml file
+    //there inside the android tag write (android:requestLegacyExternalStorage="true")
+    //permission denied problem will be solved
+    public void scorestore() //it will store the high score
+    {
+        //saving scores
+        HighScore = score;
+        totalQuestions = TotalQuesionsAsked;
+
+        save = "Correct Answers = "+HighScore + "\t\t Total numbers of questions attempted = "+totalQuestions;
+        if(ScoreCounter.getText().toString().equals("score"))
+        {
+            Toast.makeText(MainActivity.this, "File not saved score is 0/0", Toast.LENGTH_SHORT).show();
+        }
+        else{ //data entry will take place
+              //android version above marshmallow will require to ask for user permission to access files
+            //go to manifest file and type the following under the package name
+            //<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
+            if(Build.VERSION.SDK_INT>Build.VERSION_CODES.M)  //checking our bhuild version of the os greater than marshmallow version
+            {
+                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED)
+                {
+                    String [] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+                    //show popup for runtime permissions
+                    requestPermissions(permissions, WRITE_EXTERNAL_STORAGE_CODE);
+                }
+                else{
+                    //permission already granted; hence save data
+                    saveToTxtFile(save);
+                }
+            }
+
+        }
+    }
+
+    //checking permission and requesting permission
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode)
+        {
+            case WRITE_EXTERNAL_STORAGE_CODE:{
+                // if request is canceled then result arrays are empty
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    saveToTxtFile(save);
+                }
+                else
+                {
+                    Toast.makeText(this, "Storage permission required", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    //actually saving in game data onto the file system by creating a directory and a txt file
+    private void saveToTxtFile(String save) {
+    //get current Time for file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
+
+        try{
+             //path to storage
+            //File path = Environment.getExternalStorageDirectory();
+            File path = Environment.getExternalStorageDirectory();
+            //create folder name "Brain_Trainer_game"
+            File dir = new File(path+"/Brain Trainer game/");
+            dir.mkdirs();
+
+            //File name
+            String Filename = "Brain_Trainer_saved_score_" + timeStamp + ".txt";
+
+            //creating new file
+            File file = new File(dir, Filename);
+
+            //FileWriter class s used to store characters in file
+            FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fileWriter);
+            bw.write(save);
+            bw.close();
+
+            //Showing file name that was just created
+            Toast.makeText(this,Filename + "is saved\n" +dir, Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
+        {
+            //if anything goes wrong
+            Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     //function for countdown timer
     public void Count_Down_timer()
     {
@@ -178,6 +289,9 @@ public class MainActivity extends AppCompatActivity {
                 //play sound when count down timer becomes 0
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.timeout_ringtone);
                 mediaPlayer.start();
+
+                //saving the score in brain trainer folder
+                scorestore();
             }
         }.start();
     }
@@ -320,6 +434,9 @@ public class MainActivity extends AppCompatActivity {
 
         //setting up the timer textView
         timer = findViewById(R.id.TimerTextView);
+
+        //setting the high score to the score textView
+        ScoreCounter.setText(HighScore+"/"+totalQuestions);
 
         //calling newQuestion method that we just created here
         newQuestions();

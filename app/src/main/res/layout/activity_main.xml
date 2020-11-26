@@ -32,11 +32,11 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:background="#7381D8"
-        android:text="0/0"
         android:textColor="#050505"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="score" />
 
     <TextView
         android:id="@+id/sumTextView"
