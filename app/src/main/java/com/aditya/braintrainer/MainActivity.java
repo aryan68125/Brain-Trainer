@@ -3,6 +3,7 @@ package com.aditya.braintrainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    MediaPlayer mediaPlayer; //mediaplayer will play the time sound when the count down timer becomes 0
 
     Double wrongAnswers; //stores wrong answers that is to be inserted in rest of the choice boxes
 
@@ -171,6 +174,10 @@ public class MainActivity extends AppCompatActivity {
                 choice1.setEnabled(false);
                 choice2.setEnabled(false);
                 choice3.setEnabled(false);
+
+                //play sound when count down timer becomes 0
+                mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.timeout_ringtone);
+                mediaPlayer.start();
             }
         }.start();
     }
