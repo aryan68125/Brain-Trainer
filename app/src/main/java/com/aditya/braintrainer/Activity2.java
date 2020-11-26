@@ -2,6 +2,7 @@ package com.aditya.braintrainer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +15,8 @@ public class Activity2 extends AppCompatActivity {
 
     ListView listView;
     TextView textView4;
+
+    MediaPlayer mediaPlayer; //will play sound when something is selected from the listView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,26 +35,38 @@ public class Activity2 extends AppCompatActivity {
                 if(position==0)
                 {
                     textView4.setText("Aditya Kumar");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.name);
+                    mediaPlayer.start();
                 }
                 else if(position==1)
                 {
                     textView4.setText("Computer science");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.branch);
+                    mediaPlayer.start();
                 }
                 else if(position==2)
                 {
                     textView4.setText("Saroj Institute of Technology");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.college_name);
+                    mediaPlayer.start();
                 }
                 else if(position == 3)
                 {
                     textView4.setText("123");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.college_code);
+                    mediaPlayer.start();
                 }
                 else if(position==4)
                 {
                     textView4.setText("1901230100001");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.roll_number);
+                    mediaPlayer.start();
                 }
                 else if(position==5)
                 {
                     textView4.setText("B.tech");
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.course);
+                    mediaPlayer.start();
                 }
             }
         });
