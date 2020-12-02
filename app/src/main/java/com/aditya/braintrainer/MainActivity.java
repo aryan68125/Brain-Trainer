@@ -6,7 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -14,6 +16,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.security.spec.ECField;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +37,8 @@ import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    int i = 1;
 
     int HighScore;
     int totalQuestions;
@@ -82,6 +90,47 @@ public class MainActivity extends AppCompatActivity {
 
     //initializing count down timer
     CountDownTimer countDownTimer;
+
+    //Array List for storing scores
+    static ArrayList<String> scoreList = new ArrayList<>();
+
+    //this function will allow us to set up menue item on the app title bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        //onCreateOptionsMenu(Menu menu object)
+        //menuInflater.inflate(R.menu.menue xml file name, menu object);
+        menuInflater.inflate(R.menu.saved_game_score, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //this method will get called when someone selects an item from the menue
+    //onOptionsItemSelected(@NonNull MenuItem item //this returns the selected menue item id from the menue )
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        //item.getItemId() will get the item id selected by the user
+        switch (item.getItemId()){
+            case R.id.score:
+                Log.i("item","setting selected");
+
+                SharedPreferences sharedPreferences = this.getSharedPreferences("com.aditya.braintrainer", Context.MODE_PRIVATE);
+                try{
+                   //here we will write the code to retrieve data from the shared system preferences
+                }catch (Exception e){
+
+                }
+
+
+                Intent intent = new Intent(MainActivity.this,SavedScoreActivity.class);
+                startActivity(intent);
+                //return true; works same as a break statement it prevents the fall through of the switch case
+                return true;
+            default:
+                return false;
+        }
+    }
 
     public void start(View view) //this function is responsible for handling starting and play again functions in the game
     { //this function will reset the score counter then the button is pressed
@@ -218,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
 
         try{
-             //path to storage
+             //path to storage in the file system
             //File path = Environment.getExternalStorageDirectory();
             File path = Environment.getExternalStorageDirectory();
             //create folder name "Brain_Trainer_game"
@@ -239,6 +288,22 @@ public class MainActivity extends AppCompatActivity {
 
             //Showing file name that was just created
             Toast.makeText(this,Filename + "is saved\n" +dir, Toast.LENGTH_SHORT).show();
+
+            //saving data of scores in the shared system preferences
+            //adding data  to the array list
+            String saved = i+". " + "Correct Answers = "+Integer.toString(score)+ "\n" + "Total Questions Asked = "+Integer.toString(TotalQuesionsAsked)+"\n";
+            SavedScoreActivity.savedScore.add(saved);
+            SavedScoreActivity.arrayAdapter.notifyDataSetChanged();
+            scoreList.add(i+". " + "Correct Answers = "+Integer.toString(score)+ "\n" + "Total Questions Asked = "+Integer.toString(TotalQuesionsAsked)+"\n");
+            i++;
+            SharedPreferences sharedPreferences = this.getSharedPreferences("com.aditya.braintrainer", Context.MODE_PRIVATE);
+            try {
+                sharedPreferences.edit().putString("scoreList", ObjectSerializer.serialize(scoreList)).apply();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         catch (Exception e)
         {
