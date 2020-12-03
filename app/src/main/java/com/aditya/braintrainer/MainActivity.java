@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import java.security.spec.ECField;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
     TextView choice1;
     TextView choice2;
     TextView choice3;
+
+    private List<String> fileList = new ArrayList<String>();
 
     //creating an Array List that will hold the potential correct answers that will later be fed to choice boxes
     ArrayList<Double> answers= new ArrayList<Double>();
