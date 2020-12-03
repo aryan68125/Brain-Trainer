@@ -38,7 +38,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    int i = 1;
+    static int i = 1;
 
     int HighScore;
     int totalQuestions;
@@ -114,15 +114,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.score:
                 Log.i("item","setting selected");
-
-                SharedPreferences sharedPreferences = this.getSharedPreferences("com.aditya.braintrainer", Context.MODE_PRIVATE);
-                try{
-                   //here we will write the code to retrieve data from the shared system preferences
-                }catch (Exception e){
-
-                }
-
-
                 Intent intent = new Intent(MainActivity.this,SavedScoreActivity.class);
                 startActivity(intent);
                 //return true; works same as a break statement it prevents the fall through of the switch case
@@ -169,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
         //view.getTag() gets the tag of the ui component that has been tapped by the user with the help of view function
         //view.getTag().toString() converts the tag from integer to string
-       // Integer.toString(LocationofcorrectAnswer); this is the method to convert the integer variable defined by the user
-      //view.getTag().toString(); this is the method used when we have to convert the value from integer to string returned by a predefined function
+        // Integer.toString(LocationofcorrectAnswer); this is the method to convert the integer variable defined by the user
+        //view.getTag().toString(); this is the method used when we have to convert the value from integer to string returned by a predefined function
         //String 1.equals(String 2); tells us whether the string 1 == string 2 or not
         if(Integer.toString(LocationofcorrectAnswer).equals(view.getTag().toString()))
         {
@@ -220,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "File not saved score is 0/0", Toast.LENGTH_SHORT).show();
         }
         else{ //data entry will take place
-              //android version above marshmallow will require to ask for user permission to access files
+            //android version above marshmallow will require to ask for user permission to access files
             //go to manifest file and type the following under the package name
             //<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
@@ -263,11 +254,11 @@ public class MainActivity extends AppCompatActivity {
 
     //actually saving in game data onto the file system by creating a directory and a txt file
     private void saveToTxtFile(String save) {
-    //get current Time for file name
+        //get current Time for file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis());
 
         try{
-             //path to storage in the file system
+            //path to storage in the file system
             //File path = Environment.getExternalStorageDirectory();
             File path = Environment.getExternalStorageDirectory();
             //create folder name "Brain_Trainer_game"
@@ -288,21 +279,18 @@ public class MainActivity extends AppCompatActivity {
 
             //Showing file name that was just created
             Toast.makeText(this,Filename + "is saved\n" +dir, Toast.LENGTH_SHORT).show();
-
-            //saving data of scores in the shared system preferences
-            //adding data  to the array list
-            String saved = i+". " + "Correct Answers = "+Integer.toString(score)+ "\n" + "Total Questions Asked = "+Integer.toString(TotalQuesionsAsked)+"\n";
-            SavedScoreActivity.savedScore.add(saved);
-            SavedScoreActivity.arrayAdapter.notifyDataSetChanged();
-            scoreList.add(i+". " + "Correct Answers = "+Integer.toString(score)+ "\n" + "Total Questions Asked = "+Integer.toString(TotalQuesionsAsked)+"\n");
-            i++;
-            SharedPreferences sharedPreferences = this.getSharedPreferences("com.aditya.braintrainer", Context.MODE_PRIVATE);
-            try {
-                sharedPreferences.edit().putString("scoreList", ObjectSerializer.serialize(scoreList)).apply();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
+                //saving data of scores in the shared system preferences
+                //adding data  to the array list
+                String saved = (i + ". " + "Correct Answers = " + Integer.toString(score) + "\n" + "Total Questions Asked = " + Integer.toString(TotalQuesionsAsked) + "\n");
+                SavedScoreActivity.savedScore.add(saved);
+                SavedScoreActivity.arrayAdapter.notifyDataSetChanged();
+                scoreList.add(i + ". " + "Correct Answers = " + Integer.toString(score) + "\n" + "Total Questions Asked = " + Integer.toString(TotalQuesionsAsked) + "\n");
+                i++;
+                SharedPreferences sharedPreferences = this.getSharedPreferences("com.aditya.braintrainer", Context.MODE_PRIVATE);
+                try {
+                    sharedPreferences.edit().putString("scoreList", ObjectSerializer.serialize(scoreList)).apply();
+                } catch (Exception e) {
+                    e.printStackTrace();
             }
         }
         catch (Exception e)
@@ -521,5 +509,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        }
     }
+}

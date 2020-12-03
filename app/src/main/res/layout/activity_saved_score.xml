@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Saved Socre"
+        android:text="Last Game Socre"
         android:textColor="#050505"
         android:textSize="30sp"
         android:textStyle="bold"
