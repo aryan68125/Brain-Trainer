@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
             //File path = Environment.getExternalStorageDirectory();
             File path = Environment.getExternalStorageDirectory();
             //create folder name "Brain_Trainer_game"
-            File dir = new File(path+"/Brain Trainer game/");
+            File dir = new File(path+"/Brain_Trainer_game/");
             dir.mkdirs();
 
             //File name
@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
             bw.close();
 
             //Showing file name that was just created
-            Toast.makeText(this,Filename + "is saved\n" +dir, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,Filename + "is saved\n" +dir, Toast.LENGTH_LONG).show();
                 //saving data of scores in the shared system preferences
                 //adding data  to the array list
                 String saved = (i + ". " + "Correct Answers = " + Integer.toString(score) + "\n" + "Total Questions Asked = " + Integer.toString(TotalQuesionsAsked) + "\n");
