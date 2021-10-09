@@ -7,3 +7,7 @@ Here are some sample images of the game:-
 ![](app/src/main/res/drawable/two.png)
 
 ![](app/src/main/res/drawable/three.png)
+
+![](app/src/main/res/drawable/four.png)
+
+![](app/src/main/res/drawable/five.png)
