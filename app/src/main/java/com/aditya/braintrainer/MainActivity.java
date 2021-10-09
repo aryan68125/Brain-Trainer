@@ -278,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
             //FileWriter class s used to store characters in file
             FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fileWriter);
+            //save = String text data to be saved
             bw.write(save);
             bw.close();
 
